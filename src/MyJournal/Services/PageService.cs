@@ -25,9 +25,19 @@ namespace MyJournal.Services
         }
 
         // Get all pages (in the future will likely want this to be all for some userId
-        public List<Page> Get() => _pages.Find(page => true).ToList();
+        public List<Page> Get()
+        {
+            var pages = _pages.Find(page => true).ToList();
 
-        public Page Get(string id) => _pages.Find(page => page.Id == id).FirstOrDefault();
+            return pages;
+        }
+
+        public Page Get(string id) 
+        {
+            var page = _pages.Find(page => page.Id == id).FirstOrDefault();
+
+            return page;
+        }
 
         // Will likely want to do some sort of error handling/transactional logic - what if insert fails?
         public Page CreatePage(Page page)
@@ -37,6 +47,11 @@ namespace MyJournal.Services
         }
 
         // TODO add Entry to existing Page
+        public Page CreateEntry(string pageId, Entry entry)
+        {
+            _pages.FindOneAndUpdate(p => p.Id == pageId, Builders<Page>.Update.Push(x => x.Entries, entry));
+            return Get(pageId);
+        }
         // TODO update existing Entry in existing Page
         // TODO delete Entry in Page
 
