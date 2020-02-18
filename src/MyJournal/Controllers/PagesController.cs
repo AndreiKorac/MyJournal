@@ -19,10 +19,17 @@ namespace MyJournal.Controllers
             _pageService = pageService;
         }
 
+        // GET api/pages
+        // Returns all pages
         [HttpGet]
-        public ActionResult<List<Page>> Get() => _pageService.Get();
+        public ActionResult<List<Page>> Get()
+        {
+            return _pageService.Get();
+        }
 
-        [HttpGet("{id:length(24)}")]
+        // GET api/pages/{id}
+        // Returns page for specified id
+        [HttpGet("{id:length(24)}", Name = "GetPage")]
         public ActionResult<Page> Get(string id)
         {
             var page = _pageService.Get(id);
@@ -35,18 +42,28 @@ namespace MyJournal.Controllers
             return page;
         }
 
+        // POST api/pages
+        // Creates page and returns the created page
+        // Values passed as request body
         [HttpPost]
-        public ActionResult<Page> AddPage(Page page)
+        public ActionResult<Page> PostPages(Page page)
         {
             var newPage = _pageService.CreatePage(page);
 
-            return CreatedAtRoute("Get", new { id = newPage.Id }, page);
+            return CreatedAtRoute("GetPage", new { id = newPage.Id }, page);
         }
 
-        [HttpPost("{id:length(24)}")]
-        public ActionResult<Page> AddEntry(string id, Entry newEntry)
+        // DELETE api/pages/{id}
+        [HttpDelete("{id:length(24)}")]
+        public ActionResult<Page> DeletePage(string id)
         {
-            return _pageService.CreateEntry(id, newEntry);
+            var page = _pageService.Get(id);
+            if (page != null)
+            {
+                _pageService.Delete(page.Id);
+                return NoContent();
+            }
+            else return NotFound();
         }
     }
 }
