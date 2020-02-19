@@ -54,10 +54,12 @@ namespace MyJournal.Services
 
             return Get(pageId);
         }
-        // TODO delete Entry in Page
+
         public Page DeleteEntry(string pageId, string entryId)
         {
-            _pages.FindOneAndUpdate(p => p.Id == pageId && p.Entries.Any(e => e.Id == entryId), Builders<Page>.Update.PullFilter(p => p.Entries[-1].Id, entryId));
+            var pullEntry = Builders<Page>.Update.PullFilter(p => p.Entries, e => e.Id == entryId);
+
+            _pages.FindOneAndUpdate(p => p.Id == pageId, pullEntry);
 
             return Get(pageId);
         }
