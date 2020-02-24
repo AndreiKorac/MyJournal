@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MyJournal.Models;
 
@@ -43,6 +44,16 @@ namespace MyJournal.Services
 
         public Page CreateEntry(string pageId, Entry entry)
         {
+            Page pageToUpdate = _pages.Find(p => p.Id == pageId).FirstOrDefault();
+            if(pageToUpdate != null)
+            { 
+                Entry entryWithId = pageToUpdate.Entries.Where(e => e.Id == entry.Id).FirstOrDefault();
+                while(entryWithId != null && entryWithId.Id == entry.Id)
+                {
+                    entry.Id = ObjectId.GenerateNewId().ToString();
+                }
+            }
+
             _pages.FindOneAndUpdate(p => p.Id == pageId, Builders<Page>.Update.Push(x => x.Entries, entry));
             return Get(pageId);
         }
