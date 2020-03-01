@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
 import * as PagesStore from '../store/Pages';
+import PageList from './pages/PageList';
 
 type HomeProps =
     PagesStore.PagesState &
@@ -14,6 +15,7 @@ class Home extends React.Component<HomeProps> {
     public render() {
         return (
             <div>
+                <PageList />
                 <button
                 onClick={() => { this.props.getPages(); }}>
                 Get Pages
