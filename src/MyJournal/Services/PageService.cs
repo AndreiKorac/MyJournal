@@ -47,6 +47,9 @@ namespace MyJournal.Services
             Page pageToUpdate = _pages.Find(p => p.Id == pageId).FirstOrDefault();
             if(pageToUpdate != null)
             { 
+                // MongoDB does not generate unique IDs for nested objects
+                // So we generate one in the Entry constructor
+                // And check for potential collisions before inserting it
                 Entry entryWithId = pageToUpdate.Entries.Where(e => e.Id == entry.Id).FirstOrDefault();
                 while(entryWithId != null && entryWithId.Id == entry.Id)
                 {

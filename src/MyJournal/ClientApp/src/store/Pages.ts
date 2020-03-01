@@ -22,7 +22,7 @@ export type KnownAction = GetPagesAction;
 
 export const actionCreators = {
     getPages: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        fetch(`pages`)
+        fetch(`api/pages`)
         .then(res => res.json() as Promise<Page[]>)
         .then(data => {
             dispatch({ type: 'GET_PAGES', pages: data })
