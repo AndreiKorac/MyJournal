@@ -7,7 +7,7 @@ export interface PagesState {
 
 export interface Page {
     id: string,
-    date: Date,
+    date: string,
     entries: Entry[]
 }
 

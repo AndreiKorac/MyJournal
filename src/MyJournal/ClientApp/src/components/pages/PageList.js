@@ -16,18 +16,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
 var PagesStore = require("../../store/Pages");
+require("../../custom.css");
 var PageList = /** @class */ (function (_super) {
     __extends(PageList, _super);
     function PageList() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    PageList.prototype.componentWillMount = function () {
+        this.props.getPages();
+    };
     PageList.prototype.render = function () {
         var pageList = this.props.pages.map(function (page) {
-            return React.createElement("div", { key: page.id }, page.date);
+            var date = new Date(page.date).toLocaleDateString("en-CA");
+            return React.createElement("div", { key: page.id, className: 'page-menu-item' }, date);
         });
-        return (React.createElement("div", null,
-            React.createElement("h3", null, " Your Pages "),
-            pageList));
+        return (React.createElement("div", null, pageList));
     };
     return PageList;
 }(React.Component));

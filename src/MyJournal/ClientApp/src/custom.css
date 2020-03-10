@@ -12,3 +12,19 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.home-container {
+
+}
+
+.page-menu-item {
+    
+}
+
+.page-list {
+    background-color: dimgrey
+}
+
+.current-page {
+    background-color: grey
+}

@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
 import * as PagesStore from '../store/Pages';
 import PageList from './pages/PageList';
+import '../custom.css';
 
 type HomeProps =
     PagesStore.PagesState &
@@ -14,13 +15,16 @@ type HomeProps =
 class Home extends React.Component<HomeProps> {
     public render() {
         return (
-            <div>
-                <PageList />
-                <button
-                onClick={() => { this.props.getPages(); }}>
-                Get Pages
-                </button>
+            <div className='home-container'>
+                <h3>Your Pages</h3>
+                <div className='page-list'>
+                    <PageList />
+                </div>
+                <div className='current-page'>
+                    Currently selected page
+                </div>
             </div>
+            
         )
     }
 }
