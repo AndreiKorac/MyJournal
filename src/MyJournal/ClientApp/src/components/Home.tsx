@@ -15,16 +15,17 @@ type HomeProps =
 class Home extends React.Component<HomeProps> {
     public render() {
         return (
-            <div className='home-container'>
+            <div>
                 <h3>Your Pages</h3>
-                <div className='page-list'>
-                    <PageList />
-                </div>
-                <div className='current-page'>
-                    Currently selected page
+                <div className='home-container'>
+                    <div className='page-list'>
+                        <PageList />
+                    </div>
+                    <div className='current-page'>
+                        Currently selected page
+                    </div>
                 </div>
             </div>
-            
         )
     }
 }

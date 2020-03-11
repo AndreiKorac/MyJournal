@@ -26,10 +26,12 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\components\PageList.tsx" />
+    <None Remove="ClientApp\src\components\pages\PageListItem.tsx" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\components\pages\PageList.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\components\pages\PageListItem.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

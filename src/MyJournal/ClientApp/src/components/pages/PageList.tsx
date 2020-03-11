@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../../store';
 import * as PagesStore from '../../store/Pages';
 import '../../custom.css';
+import PageListItem from './PageListItem';
 
 type PageListProps =
     PagesStore.PagesState &
@@ -29,7 +30,14 @@ class PageList extends React.Component<PageListProps> {
         
         return (
             <div>
-                {pageList}
+                {this.props.pages.map(page => {
+                    const itemProps = {
+                        key: page.id,
+                        text: new Date(page.date).toLocaleDateString("en-CA"),
+                        onClick: () => { this.props.SelectPage(page.id) }
+                    }
+                    return <PageListItem {...itemProps} />
+                })}
             </div>
         )
     }
