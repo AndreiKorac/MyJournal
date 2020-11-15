@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyJournal.Interfaces;
 using MyJournal.Models;
-using MyJournal.Services;
 
 namespace MyJournal.Controllers
 {
@@ -13,9 +8,9 @@ namespace MyJournal.Controllers
     [ApiController]
     public class EntriesController : ControllerBase
     {
-        private readonly PageService _pageService;
+        private readonly IPageService _pageService;
 
-        public EntriesController(PageService pageService)
+        public EntriesController(IPageService pageService)
         {
             _pageService = pageService;
         }

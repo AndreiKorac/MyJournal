@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MyJournal.Interfaces;
 using MyJournal.Models;
 
 namespace MyJournal.Services
 {
-    public class PageService
+    public class PageService : IPageService
     {
         private readonly IMongoCollection<Page> _pages;
 
@@ -27,7 +26,7 @@ namespace MyJournal.Services
             return pages;
         }
 
-        public Page Get(string id) 
+        public Page Get(string id)
         {
             var page = _pages.Find(page => page.Id == id).FirstOrDefault();
 
@@ -45,13 +44,13 @@ namespace MyJournal.Services
         public Page CreateEntry(string pageId, Entry entry)
         {
             Page pageToUpdate = _pages.Find(p => p.Id == pageId).FirstOrDefault();
-            if(pageToUpdate != null)
-            { 
+            if (pageToUpdate != null)
+            {
                 // MongoDB does not generate unique IDs for nested objects
                 // So we generate one in the Entry constructor
                 // And check for potential collisions before inserting it
                 Entry entryWithId = pageToUpdate.Entries.Where(e => e.Id == entry.Id).FirstOrDefault();
-                while(entryWithId != null && entryWithId.Id == entry.Id)
+                while (entryWithId != null && entryWithId.Id == entry.Id)
                 {
                     entry.Id = ObjectId.GenerateNewId().ToString();
                 }

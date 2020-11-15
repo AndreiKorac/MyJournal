@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using MyJournal.Interfaces;
 using MyJournal.Models;
 using MyJournal.Services;
 
@@ -29,7 +28,7 @@ namespace MyJournal
 
             services.AddSingleton<IMyJournalDatabaseSettings>(sp => sp.GetRequiredService<IOptions<MyJournalDatabaseSettings>>().Value);
 
-            services.AddSingleton<PageService>();
+            services.AddScoped<IPageService, PageService>();
 
             services.AddControllersWithViews();
 
